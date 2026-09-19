@@ -48,3 +48,24 @@ Route::middleware(['auth', 'role:admin,kasir'])->group(function () {
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos', [PosController::class, 'store'])->name('pos.store');
 });
+
+Route::get('/test-posts', function () {
+    // Membuat data dummy (seolah-olah dari database)
+    $posts = [
+        (object)[
+            'title' => 'Belajar Blade Templating Laravel',
+            'published' => true
+        ],
+        (object)[
+            'title' => 'Tips Membuat Component di Laravel',
+            'published' => false
+        ],
+        (object)[
+            'title' => 'Panduan Routing dan Controller',
+            'published' => true
+        ],
+    ];
+
+    // Mengirim variabel $posts ke view 'posts.index'
+    return view('posts.index', compact('posts'));
+});
