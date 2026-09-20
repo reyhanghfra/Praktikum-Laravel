@@ -49,6 +49,10 @@ Route::middleware(['auth', 'role:admin,kasir'])->group(function () {
     Route::post('/pos', [PosController::class, 'store'])->name('pos.store');
 });
 
+Route::get('/pos/history', function () {
+    return 'Halaman Riwayat Transaksi';
+})->name('pos.history');
+
 Route::get('/test-posts', function () {
     // Membuat data dummy (seolah-olah dari database)
     $posts = [
