@@ -82,6 +82,9 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-2 text-sm text-center space-x-2">
+                                    <!-- Tautan Detail dipindah ke sini -->
+                                    <a href="{{ route('products.show', $product) }}" class="text-gray-600">Detail</a>
+
                                     <!-- Tombol Ubah -->
                                     <a href="{{ route('products.edit', $product) }}" class="text-indigo-600">Ubah</a>
 
