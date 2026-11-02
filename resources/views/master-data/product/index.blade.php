@@ -17,12 +17,16 @@
                     </div>
                 @endif
 
-                <form method="GET" action="{{ route('products.index') }}" class="flex gap-3 mb-4">
+                <!-- FORM PENCARIAN, FILTER KATEGORI, STATUS STOK, & PER_PAGE -->
+                <form method="GET" action="{{ route('products.index') }}" class="flex flex-wrap gap-3 mb-4 items-center">
+                    
+                    <!-- Input Pencarian -->
                     <input type="text" name="search" value="{{ request('search') }}"
                         placeholder="Cari nama atau kode produk..."
-                        class="flex-1 rounded-md border-gray-300 shadow-sm">
+                        class="flex-1 rounded-md border-gray-300 shadow-sm text-sm">
                 
-                    <select name="category_id" class="rounded-md border-gray-300">
+                    <!-- Filter Kategori (Auto-submit saat diganti) -->
+                    <select name="category_id" class="rounded-md border-gray-300 text-sm" onchange="this.form.submit()">
                         <option value="">Semua Kategori</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" @selected(request('category_id') == $category->id)>
@@ -30,9 +34,23 @@
                             </option>
                         @endforeach
                     </select>
+
+                    <!-- Filter Status Stok (Auto-submit saat diganti) -->
+                    <select name="stock_status" class="rounded-md border-gray-300 text-sm" onchange="this.form.submit()">
+                        <option value="">Semua Stok</option>
+                        <option value="menipis" @selected(request('stock_status') == 'menipis')>Stok Menipis</option>
+                        <option value="habis" @selected(request('stock_status') == 'habis')>Stok Habis</option>
+                    </select>
+
+                    <!-- Pilihan Per Page (Auto-submit saat diganti) -->
+                    <select name="per_page" class="rounded-md border-gray-300 text-sm" onchange="this.form.submit()">
+                        <option value="10" @selected(request('per_page') == 10)>10 per halaman</option>
+                        <option value="25" @selected(request('per_page') == 25)>25 per halaman</option>
+                        <option value="50" @selected(request('per_page') == 50)>50 per halaman</option>
+                    </select>
                 
-                    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md">Cari</button>
-                    <a href="{{ route('products.index') }}" class="px-4 py-2 text-gray-500">Reset</a>
+                    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm">Cari</button>
+                    <a href="{{ route('products.index') }}" class="px-4 py-2 text-gray-500 text-sm">Reset</a>
                 </form>
 
                 <table class="min-w-full divide-y divide-gray-200">
@@ -62,6 +80,7 @@
                                     @elseif ($product->stock < 10)
                                         <span class="text-yellow-600 text-xs block">Menipis</span>
                                     @endif
+                                </td>
                                 <td class="px-4 py-2 text-sm text-center space-x-2">
                                     <!-- Tombol Ubah -->
                                     <a href="{{ route('products.edit', $product) }}" class="text-indigo-600">Ubah</a>

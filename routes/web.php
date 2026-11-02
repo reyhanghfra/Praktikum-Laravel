@@ -34,16 +34,16 @@ Route::post('/logout', [LoginController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
-// Grup Rute KHUSUS ADMIN
+// Grup Rute KHUSUS ADMIN (Hanya untuk kategori, laporan, dan user)
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
-    Route::resource('products', ProductController::class);
     Route::get('/reports/sales', [ReportController::class, 'sales'])->name('report.sales');
     Route::resource('users', UserController::class);
 });
 
-// Grup Rute ADMIN & KASIR
+// Grup Rute ADMIN & KASIR (Produk dipindah ke sini agar kasir bisa akses)
 Route::middleware(['auth', 'role:admin,kasir'])->group(function () {
+    Route::resource('products', ProductController::class); // <-- Dipindah ke sini
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos', [PosController::class, 'store'])->name('pos.store');
 });
