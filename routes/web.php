@@ -38,6 +38,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::get('/reports/sales', [ReportController::class, 'sales'])->name('report.sales');
+    Route::get('/reports/sales/export', [ReportController::class,'export'])->name('report.export');
     Route::resource('users', UserController::class);
 });
 
